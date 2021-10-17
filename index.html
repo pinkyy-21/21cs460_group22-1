@@ -12,10 +12,8 @@
 <h3>INTRODUCTION</h3>
 <p>A variety of real time sensing applications are becoming available , especially in the life logging , fitness domains. These applications use mobile sensors embedded in smartphones to recognise human activities in order to get a better understanding of human behaviour.
    HAR system is required to recognize six basic human activities such as walking,jogging,moving upstairs,downstairs,running,sleeping by training a supervised learning model and displaying activities result as per input received from our accelerometer sensor and CNN model. <br>
-
-             <img src="https://dmtyylqvwgyxw.cloudfront.net/instances/132/uploads/images/custom_image/image/675/normal_Human_activity_recognition.jpg?v=1541506221"  width="250" height="250">
 </p>
-
+             
 <p>
 HRA has wide application in medical resrarch and human survey system.Here  we will design a robust activity recognition system based on smartphone.The system uses 3 dimensional smartphone accelerometer as the only sensor to collect data from which features will be generated in both time and frequency domain.
 <img src="http://static1.squarespace.com/static/597d2753be6594cef6a34840/597d2c4715d5dbc171e4723f/597ded44e45a7c9f617e440b/1504188481214/micromachines-06-01100-g002.png?format=1500w"  width="250" height="250">
@@ -67,8 +65,150 @@ extra cost.
   5. Understanding how to implement CNN<br>
   6. Implementation of 2D CNN(if time permits)<br>
 </p>
+<h3>MIDWAY PROJECT PRESENTATION</h3>
+<h4>RELATED PAPERS</h4>
 <p>
-AFTER  MIDWAY<br>
+Related papers that I am going to elaborate here are given below:<br>
+Parer 1: Wearable Sensor-Based Human Activity Recognition Using Hybrid Deep Learning Techniques<br>
+Paper 2:A lightweight deep learning model for human activity recognition on edge devices<br>
+</p>
+<h5>INTRO OF PAPER 1</h5>
+<p>
+Human behavior recognition (HAR) is the detection, interpretation, and recognition of human behaviors, which can use smart heath care to actively assist users according to their needs. Human behavior recognition has wide application prospects, such as monitoring in smart homes, sports, game controls, health care, elderly patients care, bad habits detection, and identification. It plays a significant role in depth study and can make our daily life become smarter, safer, and more convenient. This work proposes a deep learning based scheme that can recognize both specific activities and the transitions between two different activities of short duration and low frequency for health care applications.
+</p>
+<h5>DATASETS USED IN THIS PAPER</h5>
+<p>In addition to common basic actions, this paper also studies transition actions. Actually, a few existing public data sets contain transition actions. Therefore, this paper adopts the international standard Data Set, Smart phone Based Recognition of Human Activities and Postural Transitions Data Set to conduct an experiment, which is abbreviated as HAPT Data Set. The data set is an updated version of the UCI Human Activity Recognition Using popularity Data set . It provides raw data from smart phone sensors rather than preprocessed data and collect data from accelerometer and gyroscope sensor. In addition, the action category has been expanded to include transition actions. The HAPT data set contains twelve types of actions. Firstly, it has six basic actions that include three types of static actions, such as standing, sitting, and lying, and three types of walking activities such as walking, going downstairs, and upstairs; Secondly, it has six possible transitions between any two static movements: standing to sitting, sitting to standing, standing to lying, lying to sitting, sitting to lying, and lying to standing.Total  815,614 valid pieces of data were obtained. Due to the low frequency and short duration of transition action, as well as the high frequency and long duration of basic action, there is a considerable difference in data volume between transition action and basic action. The data volume of the six transition actions is much lower than that of the other basic actions, accounting for only about 8% of the total data. 
+</p>
+<h5>PROPOSED METHOD</h5>
+<p>
+The overall architecture diagram of the method proposed in this paper is shown in Figure , which contains three parts. The first part is the preprocessing and transformation of the original data, which combines the original data such as acceleration and gyroscope into an image-like two-dimensional array. The second part is to input the composite image into a three-layer CNN network that can automatically extract the motion features from the activity image and abstract the features, then map them into the feature map. The third part is to input the feature vector into the LSTM model, establish a relationship between time and action sequence, and finally introduce the full connection layer to achieve the fusion of multiple features. In addition, Batch Normalization (BN) is introduced , in which BN can normalize the data in each layer and finally send it to the Softmax layer for action classification.</br>
+<img src="C:\Users\HP\Downloads\hn.png" weight="550" height="350">
+</p>
+<h5>MODEL IMPLEMENTATION</h5>
+<p>
+The neural network described here is implemented in TensorFlow . It is a lightweight library for building and training neural networks. Model training and classification runs on a conventional computer with a 2.4 GHz CPU and 16 GB memory.
+
+The model is trained in a fully supervised manner to backpropagate the gradient from the Softmax layer to the convolution layer. Network parameters are optimized by using minibatch gradient descent method and Adam optimizer through minimizing cross-loss function . Adam is widely used due to its advantages in simple implementation, efficient calculation, and low memory demand. Compared with other kinds of random optimization algorithms, Adam has great advantages. In this paper, to better train the model, after the training data are input into the network. Adam optimizer and backpropagation algorithm are used to learn and optimize the network parameters. Meanwhile, the cross-entropy loss function is used to calculate the total error
+</p>
+<h3>ANALYSIS OF PAPER 1</h3>
+<h3>JUSTIFICATION OF THE METHOD USED</h3>
+<h4>Why data from sensors are used?</h4>
+<p>
+=> Human behaviour data can be acquired from computer vision.But the vision based approaches have many limitations in practice.For example the use of a camera is limited by various factors, such as light, position,angle,potential obstacles and privacy invasion issues, which make it difficult to be restricted in practical applications.<br>
+=> But if we use sensors are more reliable. But in case of sensors, these wearable sensors are small in size, high in sensitivity, strong in antiinterference ability and most importantly they are integrated with our mobile phones and these sensors can accurately estimate the current acceleration and angular velocities of motion sensors in real time.<br>
+=> So the sensor based behaviour recognition is not limited by scene or time which can better reflect the nature of human activities.<br></p>
+<p>
+Therefore the research and application of human behaviour recognition based on sensors are more variable and significant.</p>
+
+<h4>Why CNN?</h4>
+<p>
+=>Human behavior recognition can be regarded as a representative pattern recognition problem. The traditional pattern of behavior recognition research using decision tree, support vector machine (SVM), and other machine learning algorithms can obtain much satisfactory results, in premise of some controlled experimental environments and a small number of labeled data. However, the accuracy of these methods depends on the effectiveness and comprehensiveness of manual feature extraction. In addition, these methods can only extract shallow features. Because of these limitations, the behavior recognition methods based on traditional pattern recognition are limited in classification accuracy and model generalization.<br>
+=>CNN follows a hierarchical model which works on building a network , like a funnel and finally gives out a fully connected layer where all the networks are connected to each other and output is processed.<br>
+=>The main advantages of CNN compared to other neural network is that it automatically detects the important features without any human supervision.<br>
+=>Little dependence on preprocessing and it is easy to understand and fast to implement.It has the highest accuracy among all algorithms that predict image.<br>
+</p>
+<h4>Why LSTM?</h4>
+<p>
+=> LSTM is used here to establish recognition models to capture time relations in input sequences and could acheive more accurate recognition.<br>
+=>This work proposes a deep learning based scheme that can recognize both specific activities and the transitions between two different activities of short duration and low frequency for health care applications.<br>
+=>As LSTM is capable to recognise sequences of inputs, by using LSTM model can recognise transitions between two different activities of short duration means we can recognise transition from standing to sitting,sitting to walking like this.<br>
+ <p>
+This work proposes a deep learning based scheme that can recognize both specific activities and the transitions between two different activities of short duration and low frequency for health care applications. In this work, we first build a deep convolutional neural network (CNN) for extracting features from the data collected by sensors. Then, the long short-term memory (LTSM) network is used to capture long-term dependencies between two actions to further improve the HAR identification rate. By combing CNN and LSTM, a wearable sensor based model is proposed that can accurately recognize activities and their transitions. The experimental results show that the proposed approach can help improve the recognition rate up to 95.87% and the recognition rate for transitions higher than 80%, which are better than those of most existing similar models over the open HAPT dataset.
+</p>
+<h3>INTRO OF PAPER 2:</h3>
+<p>Here the architecture for proposed Lightweight model is developed using Shallow Recurrent Neural Network (RNN) combined with Long Short Term Memory (LSTM) deep learning algorithm.
+then  the model is trained and tested for six HAR activities on resource constrained edge device like RaspberryPi3, using optimized parameters.
+ Experiment is conducted to evaluate efficiency of the proposed model on WISDM dataset  containing
+sensor data of 29 participants performing six daily activities: Jogging, Walking, Standing, Sitting, Upstairs, and
+Downstairs.And lastly performance of the model is measured in terms of accuracy, precision, recall, f-measure, and confusion
+matrix and is compared with certain previously developed models.</p>
+<h5>DATASET DESCRIPTION</h5>
+<p>
+Here Android smartphone having in built accelerometer is used to capture tri-axial data . The dataset consist of six
+activities performed by 29 subjects. These activities include, walking, upstairs, downstairs, jogging, upstairs, standing,
+and sitting. Each subject performed different activities carrying cell phone in front leg pocket. Constant Sampling rate
+of 20 Hz was set for accelerometer sensor. The detailed description of dataset is given in the table 1 below.<br>
+<u>    Total no of samples: 1,098,207    </u><br>
+<u>    Total no of subjects: 29          </u><br>
+<u>    Activity &nbsp;    Samples  &nbsp:     Percentage  </u><br>
+       Walking  &nbsp;    4,24,400 &nbsp;      38.6%<br>
+       Jogging  &nbsp;   3,42,177  &nbsp;    31.2%<br>
+       Upstairs &nbsp;   1,22,869  &nbsp;     11.2%<br>
+       Downstairs &nbsp; 1,00,427  &nbsp;     9.1%<br>
+       Sitting    &nbsp; 59,939    &nbsp;    5.5%<br>
+       Standing  &nbsp;  48,397    &nbsp;     4.4%<br></p>
+<h5>PROPOSED METHOD</h5>
+<p>
+The working of Lightweight RNN-LSTM based HAR system for edge devices is shown in below figure. The accelerometer
+reading is partitioned into fix window size T. The input to the model is a set of readings (x1, x2, x3,…….,xT-1, xT)
+captured in time T, where xt is the reading captured at any time instance t. This segmented window is readings are
+then fed to Lightweight RNN-LSTM model. The model uses sum of rule and combine output from different states
+using softmax classifier to one final output of that particular window as oT.<br>
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTCK7McmSBib9whSeAg6dZr3SONVjuPR3cWQ&usqp=CAU" width="550" height="350">
+</p>
+<h5>MODEL IMPLEMENTATION</h5>
+<p>
+The proposed model is developed using RNN combined with LSTM. It has a shallow structure with just two hidden
+layers and 30 neurons making it feasible to be deployed on edge computing devices like IoT boards (Raspberry Pi,
+Audrino, etc.), Android , iOS based resource constrained devices.
+The experiment is performed on Raspberry Pi3 with 4xARM Cortex A-53, 1.2 GHz processor, and 1 GB RAM.
+The model for human activity recognition is implemented on python3.5 and tensorf 1.7.
+<h3>ANALYSIS OF PAPER 2:</h3>
+<h5>JUSTIFICATION OF METHOD USED</h5>
+<p>WHY RNN-LSTM?<br>
+=>In previous paper they are using CNN-LSTM but here RNN-LSTM is used.RNNs are capable of capturing temporal information from sequential data. It consists of input, hidden, and output layer.Hidden layer consist of multiple nodes.<br>
+=>RNN networks suffer from the problem of exploding and vanishing gradient. This hinders the ability of network to
+model wide-range temporal dependencies between input readings and human activities for long context windows.
+RNNs based on LSTM can eliminate this limitation, and can model long activity windows by replacing traditional
+RNN nodes with LSTM memory cells.So here RNN is used for Activity recognition and LSTM is  used to recognise different types of transition of activations. <br>
+
+<p>
+Works done in paper 1 and paper 2 is almost same.Only in paper 1 they are using CNN-LSTM model where in paper 2 RNN-LSTM is used.And the dataset used earlier is HAPT(Human Activities and Postural Transitions) Dataset 
+having 815,614 records and 12 columns  and have both accelerometer and gyroscope values.But in paper 2 they are using WISDM(Wireless Sensor Data Mining) datasets which have 1,098,207 records and 6 columns having only accelerometer values.
+</p>
+<h3>WHAT I HAVE DONE </h3>
+<p>
+Libraries that i have used in my project:<br>
+1.Pandas for loading dataset<br>
+2.Numpy for performing neumerical computation<br>
+3.Matplotlib for plotting<br>
+4.Pickle to serialize the object for permanent storage<br>
+5.Scipy for different scintific computation and statistical functions<br>
+6.Tensorflow for creating different neural networks<br>
+7.Seaborn for beautifying graphs<br>
+8.Sklearn for training and testing splitting of data and for the matrics that I will be using to judge my model.<br>
+ After importing these libraries i will import my dataset.I have stored my dataset on google drive because google colab has all the limitations that after 12
+hours all the data will be deleted and we need to restore data again and again.<br>
+Here I am using WISDM dataset,the same dataset which was used in paper 2.<br>
+<img src="C:\Users\HP\Downloads\a.png" weight="550" height="350"><br>
+
+Here this dataset has 1,098,206 rows and 6 columns.
+</p>
+<h4>DATA EXPLORATION</h4>
+<p>
+Here we are counting values of each particular activities means how many records eachactivity has.From below picture we can see that Walking has highest no
+of records that is 424397 and Standing has least no of records that is 48395 .<br>
+<img src="C:\Users\HP\Downloads\b.png" width="550" height="350"><br>
+After this by using plot function we can plot these activities in a bar graph.<br>
+<img src="C:\Users\HP\Downloads\c.png" width="550" height="350"><br>
+Then Plotted activities in perspective of users means how much records belong to which user.<br>
+<img src="C:\Users\HP\Downloads\d.png" width="550" height="350"><br></p>
+<h5>Visualising Accelerometer datas</h5>
+<p>
+After exploring dataset we can see how the accelerometer data looks visually for each activity because we have to predict values based on accelerometer data.
+Because each activity follow a specific pattern and by looking at these patterns we can classify which accelerometer values belongs which class.<br>
+Plotted Graph for sitting is given  below.<br>
+<img src="C:\Users\HP\Downloads\e.png" width="550" height="350"><br>
+Plotted Graph for Jogging is given below.<br>
+<img src="C:\Users\HP\Downloads\f.png" width="550" height="350"><br>
+
+</p>
+<iframe src="https://onedrive.live.com/embed?cid=78A26DB1FDA69169&amp;resid=78A26DB1FDA69169%21130&amp;authkey=ALzrToBs72mA0CM&amp;em=2&amp;wdAr=1.7777777777777777" width="610px" height="367px" frameborder="0">This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe><br>
+
+
+ 
+
+<h3>AFTER  MIDWAY</h3><br><p>
 1.Implementing CNN model(if not done by midway)<br>
 2.plotting learning curve<br>
 3.Confusion matrix<br>
@@ -79,17 +219,22 @@ AFTER  MIDWAY<br>
 <p>Prediction of six basic human activities such as walking,joging,standing,sitting,moving upstairs,moving downstairs by using accelerometer data and CNN model. 
 </p>
 <h3>RELEVANT PAPERS</h3>
-  
-<p>Agarwal, P.; Alam, M. A lightweight deep learning model for human activity recognition on edge devices. Procedia Comput. Sci. 2020, 167, 2364–2373. 
+<p>
+1.Volume 2020 |Article ID 2132138 | https://doi.org/10.1155/2020/2132138
+Huaijun Wang, Jing Zhao, Junhuai Li, Ling Tian, Pengjia Tu, Ting Cao, Yang An, Kan Wang, Shancang Li, "Wearable Sensor-Based Human Activity Recognition Using Hybrid Deep Learning Techniques", Security and Communication Networks, vol. 2020, Article ID 2132138, 12 pages, 2020. https://doi.org/10.1155/2020/2132138
 </p>
 <p>
-Shugang Zhang, Zhiqiang Wei, Jie Nie, Lei Huang, Shuang Wang, Zhen Li, "A Review on Human Activity Recognition Using Vision-Based Method", Journal of Healthcare Engineering, vol. 2017, Article ID 3090343, 31 pages, 2017. https://doi.org/10.1155/2017/3090343
+2.Agarwal, P.; Alam, M. A lightweight deep learning model for human activity recognition on edge devices. Procedia Comput. Sci. 2020, 167, 2364–2373. 
+</p>
+<p>
+3.Shugang Zhang, Zhiqiang Wei, Jie Nie, Lei Huang, Shuang Wang, Zhen Li, "A Review on Human Activity Recognition Using Vision-Based Method", Journal of Healthcare Engineering, vol. 2017, Article ID 3090343, 31 pages, 2017. https://doi.org/10.1155/2017/3090343
 </p>
 <p>
 
-A. Murad and J. Y. Pyun, “Deep recurrent neural networks for human activity recognition,” Sensors (Switzerland), vol. 17, p. 11, 2017.View at: Publisher Site | Google Scholar
+4.A. Murad and J. Y. Pyun, “Deep recurrent neural networks for human activity recognition,” Sensors (Switzerland), vol. 17, p. 11, 2017.View at: Publisher Site | Google Scholar
 </p>
 </BLOCKQUOTE>	
 </body>
 </html>
+
 
